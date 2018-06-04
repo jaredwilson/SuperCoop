@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "621441049823",
+    "firebase_url": "https://smat-coop.firebaseio.com",
+    "project_id": "smat-coop",
+    "storage_bucket": "smat-coop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:621441049823:android:7b3768e242522644",
+        "android_client_info": {
+          "package_name": "app.supercoop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "621441049823-bde74h76hgg8fih3pugkl2kie13vbtqj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6hVrrXTXZk0oaRv8dE3k8GmuulB4NN1g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
