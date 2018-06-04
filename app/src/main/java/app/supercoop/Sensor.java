@@ -1,9 +1,9 @@
 package app.supercoop;
 
 public class Sensor {
-    private String temp;
-    private String humid;
-    private String ammonia;
+    public String temp;
+    public String humid;
+    public String ammonia;
 
     public Sensor() {
         temp = "70";

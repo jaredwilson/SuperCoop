@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class NewUser extends AppCompatActivity {
@@ -76,6 +77,13 @@ public class NewUser extends AppCompatActivity {
                         public void onComplete(Task<AuthResult> task) {
                             if(task.isSuccessful()){
                                 finish();
+
+                                DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference();
+                                auth = FirebaseAuth.getInstance();
+                                user = auth.getCurrentUser();
+
+                                dataRef.child("users/" + user.getUid() + "/device/example/sensors").setValue(new Sensor());
+
                                 startActivity(new Intent(getApplicationContext(), DeviceManager.class));
 
                                 Toast.makeText(NewUser.this,"Registration Complete", Toast.LENGTH_LONG).show();

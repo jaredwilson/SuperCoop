@@ -18,16 +18,27 @@ public class Device extends AppCompatActivity {
     private Sensor sensors = new Sensor();
     private boolean fanOn = false;
 
+    private String path;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference tempRef = database.getReference("sensors/temp");
-    private DatabaseReference humidRef = database.getReference("sensors/humid");
-    private DatabaseReference ammoniaRef = database.getReference("sensors/ammonia");
-    private DatabaseReference fanRef = database.getReference("sensors/fan");
+    private DatabaseReference tempRef; // = database.getReference("sensors/temp");
+    private DatabaseReference humidRef; // = database.getReference("sensors/humid");
+    private DatabaseReference ammoniaRef; // = database.getReference("sensors/ammonia");
+    private DatabaseReference fanRef; // = database.getReference("sensors/fan");
+    private FirebaseAuth auth;
+    private FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device);
+
+        auth = FirebaseAuth.getInstance();
+        path = "users/" + auth.getUid() + "/device/" + "Greenhouse" + "/sensors/";
+
+        tempRef = database.getReference(path + "temp");
+        humidRef = database.getReference(path + "humid");
+        ammoniaRef = database.getReference(path + "ammonia");
+        fanRef = database.getReference(path + "fan");
 
         tempRef.addValueEventListener(new ValueEventListener() {
             @Override
