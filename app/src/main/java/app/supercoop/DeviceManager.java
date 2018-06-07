@@ -10,6 +10,11 @@ import android.widget.ListView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +25,8 @@ public class DeviceManager extends AppCompatActivity {
     private FirebaseAuth auth;
     private FirebaseUser user;
     private String userEmail;
+    private List<String> deviceIDs;
+    private List<String> deviceNames;
 
 
     @Override
@@ -27,51 +34,61 @@ public class DeviceManager extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device_manager);
 
+
+
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
 
-        if(user != null)
-        {
-            userEmail = user.getEmail();
-        }
-        else
-        {
-            userEmail = "Not found yet?";
-        }
+        deviceIDs = new ArrayList<String>();
+        deviceNames = new ArrayList<String>();
+        DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference().child("users")
+                .child(user.getUid()).child("device");
 
+
+        dataRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                deviceIDs.clear();
+                deviceNames.clear();
+
+                for(DataSnapshot snap:dataSnapshot.getChildren()) {
+
+                    deviceIDs.add(snap.getKey());
+                    deviceNames.add(snap.child("name").getValue(String.class));
+
+                    //System.out.println(snap.getKey() + " -> " + snap.child("name").getValue(String.class));
+                }
+
+                final ListView lv = (ListView) findViewById(R.id.deviceList);
+
+                // List<String> deviceList = deviceNames;
+
+                final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
+                        (DeviceManager.this, android.R.layout.simple_selectable_list_item, deviceNames);
+
+                lv.setAdapter(arrayAdapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
 
         final ListView lv = (ListView) findViewById(R.id.deviceList);
 
-        String[] deviceNames = new String[] {
-                "Chicken Coop",
-                "Green House",
-                "Add New",
-                userEmail
-        };
-
-        final List<String> deviceList = new ArrayList<String>(Arrays.asList(deviceNames));
+        // List<String> deviceList = deviceNames;
 
         final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_selectable_list_item, deviceList);
+                (this, android.R.layout.simple_selectable_list_item, deviceNames);
 
         lv.setAdapter(arrayAdapter);
 
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> listView, View itemView, int itemPosition, long itemId)
             {
-                switch (itemPosition) {
-                    case 0:
-                    case 1:
-                        launchDevice();
-                        break;
-
-
-
-                    case 2:
-                        addNew();
-                        break;
-                }
+                launchDevice(deviceIDs.get(itemPosition));
             }
         });
 
@@ -81,16 +98,17 @@ public class DeviceManager extends AppCompatActivity {
     }
 
 
-    private void launchDevice() {
+    private void launchDevice(String deviceID) {
         Intent device = new Intent(this, Device.class);
-
+        device.putExtra("ID", deviceID);
         startActivity(device);
     }
 
 
 
-    private void addNew() {
+    public void addNew(View view) {
         Intent addNew = new Intent(this, AddNew.class);
+
 
         startActivity(addNew);
     }
@@ -101,8 +119,9 @@ public class DeviceManager extends AppCompatActivity {
     }
 
     public void refresh(View view) {
-        Intent deviceManager = new Intent(this, DeviceManager.class);
+//        Intent deviceManager = new Intent(this, DeviceManager.class);
 
-        startActivity(deviceManager);
+        finish();
+        startActivity(getIntent());
     }
 }

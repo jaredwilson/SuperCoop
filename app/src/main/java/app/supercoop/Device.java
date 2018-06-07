@@ -26,14 +26,19 @@ public class Device extends AppCompatActivity {
     private DatabaseReference fanRef; // = database.getReference("sensors/fan");
     private FirebaseAuth auth;
     private FirebaseUser user;
+    private String deviceID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_device);
 
+        Bundle extras = getIntent().getExtras();
+        if(extras !=null) {
+            deviceID = extras.getString("ID");
+        }
         auth = FirebaseAuth.getInstance();
-        path = "users/" + auth.getUid() + "/device/" + "Greenhouse" + "/sensors/";
+        path = "users/" + auth.getUid() + "/device/" + deviceID + "/sensors/";
 
         tempRef = database.getReference(path + "temp");
         humidRef = database.getReference(path + "humid");

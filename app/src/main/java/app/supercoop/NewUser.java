@@ -78,11 +78,7 @@ public class NewUser extends AppCompatActivity {
                             if(task.isSuccessful()){
                                 finish();
 
-                                DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference();
-                                auth = FirebaseAuth.getInstance();
-                                user = auth.getCurrentUser();
 
-                                dataRef.child("users/" + user.getUid() + "/device/example/sensors").setValue(new Sensor());
 
                                 startActivity(new Intent(getApplicationContext(), DeviceManager.class));
 

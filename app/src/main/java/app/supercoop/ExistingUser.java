@@ -22,6 +22,7 @@ public class ExistingUser extends AppCompatActivity {
 
     private FirebaseAuth auth;
     private FirebaseUser user;
+    private FirebaseAuth.AuthStateListener authStateListener;
     private EditText editTextEmail;
     private EditText editTextPassword;
 
@@ -32,6 +33,14 @@ public class ExistingUser extends AppCompatActivity {
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+
+
+        auth = FirebaseAuth.getInstance();
+        if (auth.getCurrentUser() != null)
+        {
+            auth.signOut();
+        }
+
     }
 
 
@@ -74,9 +83,6 @@ public class ExistingUser extends AppCompatActivity {
         }
 
 
-        Intent deviceManager = new Intent(this, DeviceManager.class);
-
-        startActivity(deviceManager);
     }
 
     public void backMain(View view) {
