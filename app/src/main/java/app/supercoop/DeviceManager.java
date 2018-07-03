@@ -88,7 +88,7 @@ public class DeviceManager extends AppCompatActivity {
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> listView, View itemView, int itemPosition, long itemId)
             {
-                launchDevice(deviceIDs.get(itemPosition));
+                launchDevice(deviceIDs.get(itemPosition), deviceNames.get(itemPosition));
             }
         });
 
@@ -98,9 +98,10 @@ public class DeviceManager extends AppCompatActivity {
     }
 
 
-    private void launchDevice(String deviceID) {
+    private void launchDevice(String deviceID, String deviceName) {
         Intent device = new Intent(this, Device.class);
         device.putExtra("ID", deviceID);
+        device.putExtra("Name", deviceName);
         startActivity(device);
     }
 
