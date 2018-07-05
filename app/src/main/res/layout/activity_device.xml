@@ -13,6 +13,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:text="DeviceName"
+        android:textAlignment="center"
+        android:textSize="36sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,24 +25,26 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="148dp"
+        android:layout_marginTop="8dp"
         android:onClick="back"
         android:text="Back"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ControlStateValue_text" />
 
     <TextView
         android:id="@+id/ADC1_text"
-        android:layout_width="72dp"
+        android:layout_width="124dp"
         android:layout_height="18dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/DeviceName" />
 
     <TextView
         android:id="@+id/ADC2_text"
-        android:layout_width="72dp"
+        android:layout_width="124dp"
         android:layout_height="18dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
@@ -49,7 +54,7 @@
 
     <TextView
         android:id="@+id/ADC3_text"
-        android:layout_width="72dp"
+        android:layout_width="124dp"
         android:layout_height="18dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
@@ -57,17 +62,170 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ADC2_text" />
 
+    <TextView
+        android:id="@+id/ADC4_text"
+        android:layout_width="124dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ADC3_text" />
+
+    <TextView
+        android:id="@+id/ADC5_text"
+        android:layout_width="124dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ADC4_text" />
+
+    <TextView
+        android:id="@+id/ADC6_text"
+        android:layout_width="124dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ADC5_text" />
+
+    <TextView
+        android:id="@+id/ADC7_text"
+        android:layout_width="124dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ADC6_text" />
+
+    <TextView
+        android:id="@+id/ADC8_text"
+        android:layout_width="124dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ADC7_text" />
+
+    <TextView
+        android:id="@+id/ControlState_text"
+        android:layout_width="124dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ADC8_text" />
+
+
+    <TextView
+        android:id="@+id/ADC1Value_text"
+        android:layout_width="96dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/ADC1_text"
+        app:layout_constraintTop_toBottomOf="@+id/DeviceName" />
+
+    <TextView
+        android:id="@+id/ADC2Value_text"
+        android:layout_width="96dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/ADC2_text"
+        app:layout_constraintTop_toBottomOf="@+id/ADC1Value_text" />
+
+    <TextView
+        android:id="@+id/ADC3Value_text"
+        android:layout_width="96dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/ADC3_text"
+        app:layout_constraintTop_toBottomOf="@+id/ADC2Value_text" />
+
+    <TextView
+        android:id="@+id/ADC4Value_text"
+        android:layout_width="96dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/ADC4_text"
+        app:layout_constraintTop_toBottomOf="@+id/ADC3Value_text" />
+
+    <TextView
+        android:id="@+id/ADC5Value_text"
+        android:layout_width="96dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/ADC5_text"
+        app:layout_constraintTop_toBottomOf="@+id/ADC4Value_text" />
+
+    <TextView
+        android:id="@+id/ADC6Value_text"
+        android:layout_width="96dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/ADC6_text"
+        app:layout_constraintTop_toBottomOf="@+id/ADC5Value_text" />
+
+    <TextView
+        android:id="@+id/ADC7Value_text"
+        android:layout_width="96dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/ADC7_text"
+        app:layout_constraintTop_toBottomOf="@+id/ADC6Value_text" />
+
+    <TextView
+        android:id="@+id/ADC8Value_text"
+        android:layout_width="96dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/ADC8_text"
+        app:layout_constraintTop_toBottomOf="@+id/ADC7Value_text" />
+
+    <TextView
+        android:id="@+id/ControlStateValue_text"
+        android:layout_width="96dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/ControlState_text"
+        app:layout_constraintTop_toBottomOf="@+id/ADC8Value_text" />
+
+
     <Button
         android:id="@+id/ADC1_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
         android:height="24dp"
         android:elevation="0dp"
         android:maxHeight="64dp"
         android:minHeight="30dp"
+        android:onClick="ADConClick"
         android:text="Edit"
         android:textAlignment="center"
         android:textSize="8sp"
@@ -80,7 +238,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="11dp"
         android:height="24dp"
         android:elevation="0dp"
@@ -89,6 +247,7 @@
         android:text="Edit"
         android:textAlignment="center"
         android:textSize="8sp"
+        android:onClick="ADConClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ADC2Value_text"
         app:layout_constraintTop_toBottomOf="@+id/ADC1_button" />
@@ -98,7 +257,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="11dp"
         android:height="24dp"
         android:elevation="0dp"
@@ -107,6 +266,7 @@
         android:text="Edit"
         android:textAlignment="center"
         android:textSize="8sp"
+        android:onClick="ADConClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ADC3Value_text"
         app:layout_constraintTop_toBottomOf="@+id/ADC2_button" />
@@ -116,7 +276,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="11dp"
         android:height="24dp"
         android:elevation="0dp"
@@ -125,6 +285,7 @@
         android:text="Edit"
         android:textAlignment="center"
         android:textSize="8sp"
+        android:onClick="ADConClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ADC4Value_text"
         app:layout_constraintTop_toBottomOf="@+id/ADC3_button" />
@@ -134,7 +295,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="11dp"
         android:height="24dp"
         android:elevation="0dp"
@@ -143,6 +304,7 @@
         android:text="Edit"
         android:textAlignment="center"
         android:textSize="8sp"
+        android:onClick="ADConClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ADC5Value_text"
         app:layout_constraintTop_toBottomOf="@+id/ADC4_button" />
@@ -152,7 +314,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:height="24dp"
         android:elevation="0dp"
@@ -161,6 +323,7 @@
         android:text="Edit"
         android:textAlignment="center"
         android:textSize="8sp"
+        android:onClick="ADConClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ADC6Value_text"
         app:layout_constraintTop_toBottomOf="@+id/ADC5_button" />
@@ -170,7 +333,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:height="24dp"
         android:elevation="0dp"
@@ -179,198 +342,48 @@
         android:text="Edit"
         android:textAlignment="center"
         android:textSize="8sp"
+        android:onClick="ADConClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ADC7Value_text"
         app:layout_constraintTop_toBottomOf="@+id/ADC6_button" />
-
-    <Button
-        android:id="@+id/ControlState_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
-        android:height="24dp"
-        android:elevation="0dp"
-        android:maxHeight="64dp"
-        android:minHeight="30dp"
-        android:text="Toggle"
-        android:textAlignment="center"
-        android:textSize="8sp"
-        android:onClick="toggleControl"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.612"
-        app:layout_constraintStart_toEndOf="@+id/ControlStateValue_text"
-        app:layout_constraintTop_toBottomOf="@+id/ADC8_button" />
 
     <Button
         android:id="@+id/ADC8_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:height="24dp"
         android:elevation="0dp"
         android:maxHeight="64dp"
         android:minHeight="30dp"
+        android:onClick="ADConClick"
         android:text="Edit"
         android:textAlignment="center"
         android:textSize="8sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.606"
         app:layout_constraintStart_toEndOf="@+id/ADC8Value_text"
         app:layout_constraintTop_toBottomOf="@+id/ADC7_button" />
 
-    <TextView
-        android:id="@+id/ADC4_text"
-        android:layout_width="72dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ADC3_text" />
-
-    <TextView
-        android:id="@+id/ADC5_text"
-        android:layout_width="72dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ADC4_text" />
-
-    <TextView
-        android:id="@+id/ADC6_text"
-        android:layout_width="72dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ADC5_text" />
-
-    <TextView
-        android:id="@+id/ADC7_text"
-        android:layout_width="72dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ADC6_text" />
-
-    <TextView
-        android:id="@+id/ControlState_text"
-        android:layout_width="72dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ADC8_text" />
-
-    <TextView
-        android:id="@+id/ADC8_text"
-        android:layout_width="72dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ADC7_text" />
-
-    <TextView
-        android:id="@+id/ADC1Value_text"
-        android:layout_width="72dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="40dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/ADC1_text"
-        app:layout_constraintTop_toBottomOf="@+id/DeviceName" />
-
-    <TextView
-        android:id="@+id/ADC2Value_text"
-        android:layout_width="72dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/ADC2_text"
-        app:layout_constraintTop_toBottomOf="@+id/ADC1Value_text" />
-
-    <TextView
-        android:id="@+id/ADC3Value_text"
-        android:layout_width="72dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/ADC3_text"
-        app:layout_constraintTop_toBottomOf="@+id/ADC2Value_text" />
-
-    <TextView
-        android:id="@+id/ADC4Value_text"
-        android:layout_width="72dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/ADC4_text"
-        app:layout_constraintTop_toBottomOf="@+id/ADC3Value_text" />
-
-    <TextView
-        android:id="@+id/ADC5Value_text"
-        android:layout_width="72dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/ADC5_text"
-        app:layout_constraintTop_toBottomOf="@+id/ADC4Value_text" />
-
-    <TextView
-        android:id="@+id/ADC6Value_text"
-        android:layout_width="72dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/ADC6_text"
-        app:layout_constraintTop_toBottomOf="@+id/ADC5Value_text" />
-
-    <TextView
-        android:id="@+id/ADC7Value_text"
-        android:layout_width="72dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/ADC7_text"
-        app:layout_constraintTop_toBottomOf="@+id/ADC6Value_text" />
-
-    <TextView
-        android:id="@+id/ControlStateValue_text"
-        android:layout_width="72dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/ControlState_text"
-        app:layout_constraintTop_toBottomOf="@+id/ADC8Value_text" />
-
-    <TextView
-        android:id="@+id/ADC8Value_text"
-        android:layout_width="72dp"
-        android:layout_height="18dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/ADC8_text"
-        app:layout_constraintTop_toBottomOf="@+id/ADC7Value_text" />
+    <Button
+        android:id="@+id/ControlState_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:height="24dp"
+        android:elevation="0dp"
+        android:maxHeight="64dp"
+        android:minHeight="30dp"
+        android:onClick="toggleControl"
+        android:text="Toggle"
+        android:textAlignment="center"
+        android:textSize="8sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ControlStateValue_text"
+        app:layout_constraintTop_toBottomOf="@+id/ADC8_button" />
 
 
 </android.support.constraint.ConstraintLayout>

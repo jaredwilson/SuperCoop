@@ -14,8 +14,7 @@ public class Sensor {
     public int ADC6;
     public int ADC7;
     public int ADC8;
-    private String[] ADC_identifier;
-
+    private int[] ADCs = new int[9];
 
     public Sensor() {
         ADC1 = 0;
@@ -29,7 +28,7 @@ public class Sensor {
     }
 
 
-    public void setSensors(String jsonString) {
+    public int[] setSensors(String jsonString) {
         JSONObject json = null;
         try {
             json = new JSONObject(jsonString);
@@ -48,10 +47,24 @@ public class Sensor {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        setSensorArray();
 
 
-
-        return;
+        return ADCs;
     }
 
+    private void setSensorArray(){
+        ADCs[1] = ADC1;
+        ADCs[2] = ADC2;
+        ADCs[3] = ADC3;
+        ADCs[4] = ADC4;
+        ADCs[5] = ADC5;
+        ADCs[6] = ADC6;
+        ADCs[7] = ADC7;
+        ADCs[8] = ADC8;
+    }
+
+
 }
+
+

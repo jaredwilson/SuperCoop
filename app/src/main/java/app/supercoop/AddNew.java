@@ -58,7 +58,7 @@ public class AddNew extends AppCompatActivity {
             dataRef.child(path + "/name").setValue(DeviceNickname);
             dataRef.child(path + "/peripherals").setValue(new Peripheral());
             dataRef.child(path + "/sensorNames").setValue(new FirebaseStringInit());
-            dataRef.child(path + "/sensorValues").setValue(new FirebaseStringInit(1));
+            //dataRef.child(path + "/sensorValues").setValue(new FirebaseStringInit(1));
             finish();
         }
     }
@@ -83,16 +83,5 @@ class FirebaseStringInit {
         ADC6 = "ADC6";
         ADC7 = "ADC7";
         ADC8 = "ADC8";
-    }
-
-    public FirebaseStringInit(int x) {
-        ADC1 = "no value";
-        ADC2 = "no value";
-        ADC3 = "no value";
-        ADC4 = "no value";
-        ADC5 = "no value";
-        ADC6 = "no value";
-        ADC7 = "no value";
-        ADC8 = "no value";
     }
 }

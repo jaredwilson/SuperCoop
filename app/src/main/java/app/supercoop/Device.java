@@ -1,15 +1,12 @@
 package app.supercoop;
 
-import android.support.annotation.NonNull;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
-import org.json.*;
-import org.w3c.dom.Text;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,32 +17,28 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class Device extends AppCompatActivity {
 
     private Sensor sensors = new Sensor();
     private Peripheral peri = new Peripheral();
-    private boolean fanOn = false;
 
     private String path;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private DatabaseReference sensorRef; // = database.getReference("sensors/temp");
+    private DatabaseReference sensorRef;
     private DatabaseReference sensorNameRef;
-    private DatabaseReference sensorValueRef;
     private DatabaseReference sensorControlRef;
     private FirebaseAuth auth;
-    private FirebaseUser user;
     private String deviceID;
     private String deviceName;
     private List<String> sensorNames;
     private List<String> sensorValues;
     private TextView[] sensorNameList;
     private TextView[] sensorValueList;
+    private ADCController adccontroller;
+    private String[] SensorValuesArray;
+
 
 
     @Override
@@ -63,10 +56,13 @@ public class Device extends AppCompatActivity {
             textView.setText(deviceName);
         }
 
+        SensorValuesArray = new String[9];
+        adccontroller = new ADCController();
         sensorNameList = new TextView[9];
         sensorValueList = new TextView[9];
         sensorNames = new ArrayList<String>();
         sensorValues = new ArrayList<String>();
+
 
         defaultSensorList();
         setTextViewLists();
@@ -75,20 +71,7 @@ public class Device extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         path = "users/" + auth.getUid() + "/device/" + deviceID;
 
-        sensorRef = database.getReference(path + "/sensors/");
-        sensorRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                sensors.setSensors(dataSnapshot.getValue().toString());
-                //((TextView)findViewById(R.id.var_temp)).setText(sensors.getTemp());
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
 
         sensorNameRef = database.getReference(path + "/sensorNames/");
         sensorNameRef.addValueEventListener(new ValueEventListener() {
@@ -104,12 +87,14 @@ public class Device extends AppCompatActivity {
                 sensorNames.add(snap.child("ADC7").getValue().toString());
                 sensorNames.add(snap.child("ADC8").getValue().toString());
 
+                SensorValuesArray = adccontroller.getConverted(sensorNames.toArray(new String[sensorNames.size()]));
+                sensorValues.clear();
+
                 for (int i = 1; i < 9; i++) {
-                    String str = sensorNames.get(i - 1);
-                    Log.i("sensorName", "hi" + str);
+                    sensorValues.add(SensorValuesArray[i]);
+                    sensorValueList[i].setText(sensorValues.get(i - 1));
                     sensorNameList[i].setText(sensorNames.get(i - 1));
                 }
-
             }
 
             @Override
@@ -117,32 +102,25 @@ public class Device extends AppCompatActivity {
             }
         });
 
-        sensorValueRef = database.getReference(path + "/sensorValues/");
-        sensorValueRef.addValueEventListener(new ValueEventListener() {
+        sensorRef = database.getReference(path + "/sensors/");
+        sensorRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snap) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+                adccontroller.setADCValues(sensors.setSensors(dataSnapshot.getValue().toString()));
+                SensorValuesArray = adccontroller.getConverted(sensorNames.toArray(new String[sensorNames.size()]));
                 sensorValues.clear();
 
-                sensorValues.add(snap.child("ADC1").getValue().toString());
-                sensorValues.add(snap.child("ADC2").getValue().toString());
-                sensorValues.add(snap.child("ADC3").getValue().toString());
-                sensorValues.add(snap.child("ADC4").getValue().toString());
-                sensorValues.add(snap.child("ADC5").getValue().toString());
-                sensorValues.add(snap.child("ADC6").getValue().toString());
-                sensorValues.add(snap.child("ADC7").getValue().toString());
-                sensorValues.add(snap.child("ADC8").getValue().toString());
-
-
                 for (int i = 1; i < 9; i++) {
-                    Log.i("test", sensorValues.get(i - 1));
+                    //Log.i("test", sensorValues.get(i - 1));
+                    sensorValues.add(SensorValuesArray[i]);
                     sensorValueList[i].setText(sensorValues.get(i - 1));
                 }
-
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
             }
         });
 
@@ -164,57 +142,173 @@ public class Device extends AppCompatActivity {
 
     private void setTextViewLists() {
 
-        sensorNameList[0] = (TextView) findViewById(R.id.ControlState_text);
-        sensorValueList[0] = (TextView) findViewById(R.id.ControlStateValue_text);
-        sensorNameList[1] = (TextView) findViewById(R.id.ADC1_text);
-        sensorValueList[1] = (TextView) findViewById(R.id.ADC1Value_text);
-        sensorNameList[2] = (TextView) findViewById(R.id.ADC2_text);
-        sensorValueList[2] = (TextView) findViewById(R.id.ADC2Value_text);
-        sensorNameList[3] = (TextView) findViewById(R.id.ADC3_text);
-        sensorValueList[3] = (TextView) findViewById(R.id.ADC3Value_text);
-        sensorNameList[4] = (TextView) findViewById(R.id.ADC4_text);
-        sensorValueList[4] = (TextView) findViewById(R.id.ADC4Value_text);
-        sensorNameList[5] = (TextView) findViewById(R.id.ADC5_text);
-        sensorValueList[5] = (TextView) findViewById(R.id.ADC5Value_text);
-        sensorNameList[6] = (TextView) findViewById(R.id.ADC6_text);
-        sensorValueList[6] = (TextView) findViewById(R.id.ADC6Value_text);
-        sensorNameList[7] = (TextView) findViewById(R.id.ADC7_text);
-        sensorValueList[7] = (TextView) findViewById(R.id.ADC7Value_text);
-        sensorNameList[8] = (TextView) findViewById(R.id.ADC8_text);
-        sensorValueList[8] = (TextView) findViewById(R.id.ADC8Value_text);
+        sensorNameList[0] = findViewById(R.id.ControlState_text);
+        sensorValueList[0] = findViewById(R.id.ControlStateValue_text);
+        sensorNameList[1] = findViewById(R.id.ADC1_text);
+        sensorValueList[1] = findViewById(R.id.ADC1Value_text);
+        sensorNameList[2] = findViewById(R.id.ADC2_text);
+        sensorValueList[2] = findViewById(R.id.ADC2Value_text);
+        sensorNameList[3] = findViewById(R.id.ADC3_text);
+        sensorValueList[3] = findViewById(R.id.ADC3Value_text);
+        sensorNameList[4] = findViewById(R.id.ADC4_text);
+        sensorValueList[4] = findViewById(R.id.ADC4Value_text);
+        sensorNameList[5] = findViewById(R.id.ADC5_text);
+        sensorValueList[5] = findViewById(R.id.ADC5Value_text);
+        sensorNameList[6] = findViewById(R.id.ADC6_text);
+        sensorValueList[6] = findViewById(R.id.ADC6Value_text);
+        sensorNameList[7] = findViewById(R.id.ADC7_text);
+        sensorValueList[7] = findViewById(R.id.ADC7Value_text);
+        sensorNameList[8] = findViewById(R.id.ADC8_text);
+        sensorValueList[8] = findViewById(R.id.ADC8Value_text);
     }
 
     private void defaultSensorList() {
         sensorValues.clear();
         sensorNames.clear();
-        for (int i = 0; i < 8; i++) {
-            sensorValues.add("ADCValue" + (i+1));
-            sensorNames.add("ADC" + (i+1));
+        for (int i = 1; i < 9; i++) {
+            sensorValues.add("ADCValue" + i);
+            sensorNames.add("ADC" + i);
         }
     }
 
-    private void setSensorValues() {
-
-    }
-
-    private void setSensorNames() {
-
-    }
-
     public void toggleControl(View v) {
-
         sensorControlRef.child("ControlState").setValue(peri.togglePeripheral());
-
-      //  writeFanFirebase();
-
     }
 
-   // private void writeFanFirebase()
-   // {
-    //    fanRef.setValue(fanOn);
-    //}
+    public void ADConClick (final View view) {
+
+
+
+        final CharSequence sensorSelection[] = new CharSequence[] {"Temperature", "Humidity", "Ammonia", "Reset"};
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Select Sensor Type");
+        builder.setItems(sensorSelection, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int i) {
+                // the user clicked on colors[which]
+                String myText = sensorSelection[i].toString();
+                Boolean reset = false;
+
+                if(myText.equalsIgnoreCase("reset")) {
+                    myText = "ADC";
+                    reset = true;
+                }
+
+                switch (view.getId()) {
+                    case R.id.ADC1_button:
+                        if(reset)
+                            myText += "1";
+                        sensorNameRef.child("ADC1").setValue(myText);
+                        break;
+                    case R.id.ADC2_button:
+                        if(reset)
+                            myText += "2";
+                        sensorNameRef.child("ADC2").setValue(myText);
+                        break;
+                    case R.id.ADC3_button:
+                        if(reset)
+                            myText += "3";
+                        sensorNameRef.child("ADC3").setValue(myText);
+                        break;
+                    case R.id.ADC4_button:
+                        if(reset)
+                            myText += "4";
+                        sensorNameRef.child("ADC4").setValue(myText);
+                        break;
+                    case R.id.ADC5_button:
+                        if(reset)
+                            myText += "5";
+                        sensorNameRef.child("ADC5").setValue(myText);
+                        break;
+                    case R.id.ADC6_button:
+                        if(reset)
+                            myText += "6";
+                        sensorNameRef.child("ADC6").setValue(myText);
+                        break;
+                    case R.id.ADC7_button:
+                        if(reset)
+                            myText += "7";
+                        sensorNameRef.child("ADC7").setValue(myText);
+                        break;
+                    case R.id.ADC8_button:
+                        if(reset)
+                            myText += "8";
+                        sensorNameRef.child("ADC8").setValue(myText);
+                        break;
+                }
+            }
+        });
+        builder.show();
+    }
 
     public void back(View view) {
         finish();
     }
+}
+
+class ADCController {
+    private int[] before;
+    private String[] after;
+
+    public ADCController () {
+        before = new int[9];
+        after = new String[9];
+    }
+
+    public void setADCValues (int [] sensorADCValues) {
+        before = sensorADCValues.clone();
+
+    }
+
+
+
+    public String[] getConverted (String [] sensorADCNames) {
+
+        for(int i = 1; i <= sensorADCNames.length; i++)
+        {
+            String tempStr = sensorADCNames[i-1];
+            if(tempStr.equals("ADC" + i))
+            {
+                after[i] = "No Value";
+            }
+            else if (tempStr.equals("Temperature"))
+            {
+                after[i] = convertTemp(i);
+            }
+            else if (tempStr.equals("Humidity")) {
+                after[i] = convertHumidity(i);
+            }
+            else if (tempStr.equals("Ammonia")) {
+                after[i] = convertAmmonia(i);
+            }
+            else
+                after[i+1] = "No Value";
+        }
+
+        return after.clone();
+    }
+
+    private String convertTemp (int i) {
+        String tempStr = "T:" + before[i];
+
+
+        return tempStr;
+    }
+
+    private String convertHumidity (int i) {
+        String tempStr = "H:" + before[i];
+
+
+        return tempStr;
+    }
+
+    private String convertAmmonia (int i) {
+        String tempStr = "A:" + before[i];
+
+
+        return tempStr;
+    }
+
+
 }
