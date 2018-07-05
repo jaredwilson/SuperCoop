@@ -29,6 +29,7 @@ import java.util.ListIterator;
 public class Device extends AppCompatActivity {
 
     private Sensor sensors = new Sensor();
+    private Peripheral peri = new Peripheral();
     private boolean fanOn = false;
 
     private String path;
@@ -53,12 +54,11 @@ public class Device extends AppCompatActivity {
         setContentView(R.layout.activity_device);
 
         Bundle extras = getIntent().getExtras();
-        if(extras !=null) {
+        if (extras != null) {
             deviceID = extras.getString("ID");
             deviceName = extras.getString("Name");
         }
-        if(!deviceName.isEmpty())
-        {
+        if (!deviceName.isEmpty()) {
             TextView textView = (TextView) findViewById(R.id.DeviceName);
             textView.setText(deviceName);
         }
@@ -70,8 +70,6 @@ public class Device extends AppCompatActivity {
 
         defaultSensorList();
         setTextViewLists();
-
-
 
 
         auth = FirebaseAuth.getInstance();
@@ -106,10 +104,10 @@ public class Device extends AppCompatActivity {
                 sensorNames.add(snap.child("ADC7").getValue().toString());
                 sensorNames.add(snap.child("ADC8").getValue().toString());
 
-                for(int i = 1; i < 9; i++) {
-                    String str = sensorNames.get(i-1);
+                for (int i = 1; i < 9; i++) {
+                    String str = sensorNames.get(i - 1);
                     Log.i("sensorName", "hi" + str);
-                    sensorNameList[i].setText(sensorNames.get(i-1));
+                    sensorNameList[i].setText(sensorNames.get(i - 1));
                 }
 
             }
@@ -135,9 +133,9 @@ public class Device extends AppCompatActivity {
                 sensorValues.add(snap.child("ADC8").getValue().toString());
 
 
-                for(int i = 1; i < 9; i++) {
-                    Log.i("test", sensorValues.get(i-1));
-                    sensorValueList[i].setText(sensorValues.get(i-1));
+                for (int i = 1; i < 9; i++) {
+                    Log.i("test", sensorValues.get(i - 1));
+                    sensorValueList[i].setText(sensorValues.get(i - 1));
                 }
 
             }
@@ -149,8 +147,19 @@ public class Device extends AppCompatActivity {
         });
 
         sensorControlRef = database.getReference(path + "/peripherals/");
-        //sensorNameRef.once
+        sensorControlRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snap) {
+                peri.setPeripheral(snap.child("ControlState").getValue(Integer.class));
+                sensorValueList[0].setText(peri.getPeripheral());
+                sensorNameList[0].setText("ControlState");
+            }
 
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void setTextViewLists() {
@@ -192,13 +201,9 @@ public class Device extends AppCompatActivity {
 
     }
 
-    public void fanClick(View v) {
-        fanOn = !fanOn;
+    public void toggleControl(View v) {
 
-        if(fanOn)
-            ; // ((TextView)findViewById(R.id.button)).setText("Fan is On");
-        else
-            ; // ((TextView)findViewById(R.id.button)).setText("Fan is Off");
+        sensorControlRef.child("ControlState").setValue(peri.togglePeripheral());
 
       //  writeFanFirebase();
 
