@@ -50,7 +50,7 @@ public class AddNew extends AppCompatActivity {
             DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference();
             auth = FirebaseAuth.getInstance();
             user = auth.getCurrentUser();
-            String path = "users/" + user.getUid() + "/device/" + DeviceID;
+            String path = "users/" + user.getUid() + "/" + DeviceID;
             dataRef.child("devices/" + DeviceID + "/uid").setValue(user.getUid());
             dataRef.child("devices/" + DeviceID + "/name").setValue(DeviceNickname);
 

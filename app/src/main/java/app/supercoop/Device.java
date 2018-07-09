@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +70,7 @@ public class Device extends AppCompatActivity {
 
 
         auth = FirebaseAuth.getInstance();
-        path = "users/" + auth.getUid() + "/device/" + deviceID;
+        path = "users/" + auth.getUid() + "/" + deviceID;
 
 
 
@@ -179,7 +180,7 @@ public class Device extends AppCompatActivity {
 
 
 
-        final CharSequence sensorSelection[] = new CharSequence[] {"Temperature", "Humidity", "Ammonia", "Reset"};
+        final CharSequence sensorSelection[] = new CharSequence[] {"Temperature", "Humidity", "Ammonia", "Light", "Door", "Fan", "Reset"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Select Sensor Type");
@@ -250,10 +251,14 @@ public class Device extends AppCompatActivity {
 class ADCController {
     private int[] before;
     private String[] after;
+    private double humanVoltage;
+    private final double TI_VoltageRef = 4.2;
+    private final double ADC12 = 4095;
 
     public ADCController () {
         before = new int[9];
         after = new String[9];
+        humanVoltage = 0;
     }
 
     public void setADCValues (int [] sensorADCValues) {
@@ -282,33 +287,73 @@ class ADCController {
             else if (tempStr.equals("Ammonia")) {
                 after[i] = convertAmmonia(i);
             }
-            else
-                after[i+1] = "No Value";
+            else if (tempStr.equals("Light")) {
+                after[i] = convertLight(i);
+            }
+            else if (tempStr.equals("Door")) {
+                after[i] = convertDoor(i);
+            }
+            else if (tempStr.equals("Fan")) {
+                after[i] = convertFan(i);
+            }
+            else {
+                after[i + 1] = "No Value";
+            }
         }
 
         return after.clone();
     }
 
     private String convertTemp (int i) {
-        String tempStr = "T:" + before[i];
+        humanVoltage = 30*(before[i]/ADC12)*TI_VoltageRef;
 
-
-        return tempStr;
+        DecimalFormat df = new DecimalFormat("##.##");
+        return df.format(humanVoltage) + "\u200E°";
     }
 
     private String convertHumidity (int i) {
-        String tempStr = "H:" + before[i];
 
-
-        return tempStr;
+        humanVoltage = 30 * (before[i]/ADC12)*TI_VoltageRef;
+        DecimalFormat df = new DecimalFormat("##.##");
+        return df.format(humanVoltage) + "%";
     }
 
     private String convertAmmonia (int i) {
-        String tempStr = "A:" + before[i];
-
-
-        return tempStr;
+        humanVoltage = (before[i]/ADC12)*TI_VoltageRef;
+        DecimalFormat df = new DecimalFormat("#.##");
+        return df.format(humanVoltage) + "%";
     }
 
+    private String convertLight (int i) {
+        humanVoltage = (before[i]/ADC12)*TI_VoltageRef;
+
+        if (humanVoltage > 3)
+            return "BRIGHT";
+        else if (humanVoltage > 2)
+            return "MODERATE";
+        else if (humanVoltage > 1)
+            return "DIM";
+        else
+            return "DARK";
+
+    }
+
+    private String convertDoor (int i) {
+        humanVoltage = (before[i]/ADC12)*TI_VoltageRef;
+
+        if(humanVoltage > 1)
+            return "OPEN";
+        else
+            return "CLOSED";
+    }
+
+    private String convertFan (int i) {
+        humanVoltage = (before[i]/ADC12)*TI_VoltageRef;
+
+        if (humanVoltage > 1)
+            return "ON";
+        else
+            return  "OFF";
+    }
 
 }

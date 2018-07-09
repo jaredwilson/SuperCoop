@@ -42,7 +42,7 @@ public class DeviceManager extends AppCompatActivity {
         deviceIDs = new ArrayList<String>();
         deviceNames = new ArrayList<String>();
         DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference().child("users")
-                .child(user.getUid()).child("device");
+                .child(user.getUid());//.child("device");
 
 
         dataRef.addValueEventListener(new ValueEventListener() {
